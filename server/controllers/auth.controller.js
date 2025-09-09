@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-<<<<<<< HEAD
-import User from '../models/users.model.js';
-=======
 import User from '../models/user.model.js';
->>>>>>> 003cce6 ( Medication Reminder App backend)
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET, JWT_EXPIRES_IN } from '../config/env.js';
 
