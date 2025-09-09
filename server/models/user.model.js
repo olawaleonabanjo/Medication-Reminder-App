@@ -36,11 +36,14 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+<<<<<<< HEAD
+=======
 // Compare password method
 userSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
+>>>>>>> 003cce6 ( Medication Reminder App backend)
 const User = mongoose.model('User', userSchema);
 
 export default User;
