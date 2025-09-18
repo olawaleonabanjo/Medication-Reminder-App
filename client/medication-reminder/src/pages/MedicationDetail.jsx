@@ -47,7 +47,7 @@ export default function MedicationDetail() {
 
   useEffect(() => {
     fetchMedication();
-  },);
+  },[]);
 
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete this medication?')) {
@@ -136,7 +136,7 @@ export default function MedicationDetail() {
             <FontAwesomeIcon icon={medication.isActive ? faToggleOn : faToggleOff} />
           </button>
           <Link 
-            to={`/medications/${id}/edit`} 
+            to={`/medications/add`}
             className="edit-btn"
             title="Edit medication"
           >
@@ -220,7 +220,7 @@ export default function MedicationDetail() {
         
         <div className="action-buttons">
           <Link 
-            to={`/medications/${id}/edit`} 
+            to={`/medications/add`} 
             className="edit-btn full-width"
           >
             <FontAwesomeIcon icon={faEdit} />

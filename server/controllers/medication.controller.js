@@ -8,7 +8,7 @@ import { scheduleNotifications } from '../utils/notificationScheduler.js';
 export const getMedications = async (req, res) => {
   try {
     const medications = await Medication.find({ 
-      userId: req.user.userId,
+      userId: req.user.id,
       isActive: true 
     }).sort({ createdAt: -1 });
     
@@ -26,7 +26,7 @@ export const getMedication = async (req, res) => {
   try {
     const medication = await Medication.findOne({
       _id: req.params.id,
-      userId: req.user.userId
+      userId: req.user.id
     });
     
     if (!medication) {
@@ -48,7 +48,7 @@ export const createMedication = async (req, res) => {
     const { name, dosage, frequency, customSchedule, startDate, endDate, notes } = req.body;
     
     const medication = new Medication({
-      userId: req.user.userId,
+      userId: req.user.id,
       name,
       dosage,
       frequency,
@@ -79,7 +79,7 @@ export const updateMedication = async (req, res) => {
     
     const medication = await Medication.findOne({
       _id: req.params.id,
-      userId: req.user.userId
+      userId: req.user.id
     });
     
     if (!medication) {
@@ -117,7 +117,7 @@ export const deleteMedication = async (req, res) => {
   try {
     const medication = await Medication.findOneAndDelete({
       _id: req.params.id,
-      userId: req.user.userId
+      userId: req.user.id
     });
     
     if (!medication) {

@@ -9,7 +9,6 @@ import { JWT_SECRET, JWT_EXPIRES_IN } from '../config/env.js';
  */
 export const signUp = async (req, res) => {
   try {
-    console.log("Register body:", req.body);
 
 
     const { username, email, password } = req.body;
@@ -78,13 +77,14 @@ export const signIn = async (req, res) => {
     // Find user
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Invalid email' });
     }
 
     // Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log('bcrypt.compare =>', isPasswordValid);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Invalid password' });
     }
 
     // Generate JWT
@@ -110,6 +110,8 @@ export const signIn = async (req, res) => {
       .status(500)
       .json({ message: 'Server error', error: error.message });
   }
+
+  
 };
 
 /**

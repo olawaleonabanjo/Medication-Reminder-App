@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
-export function useAuth() {
+export  function useAuth() {
   return useContext(AuthContext);
 }
 
@@ -12,7 +12,8 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   // Base URL for API
-  axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5500/api';
+  axios.defaults.baseURL =
+    import.meta.env.VITE_API_URL || 'http://localhost:5500/api';
 
   // Save/remove token
   const setAuthToken = (token) => {
@@ -25,11 +26,11 @@ export function AuthProvider({ children }) {
     }
   };
 
-  //  Login
+  // Login
   const login = async (email, password) => {
     try {
       const response = await axios.post('/auth/login', { email, password });
-      const { user, token } = response.data.data; // backend sends inside .data
+      const { user, token } = response.data.data;
       setAuthToken(token);
       setCurrentUser(user);
       return { success: true, user };
@@ -41,7 +42,11 @@ export function AuthProvider({ children }) {
   // Register
   const register = async (username, email, password) => {
     try {
-      const response = await axios.post('/auth/register', { username, email, password });
+      const response = await axios.post('/auth/register', {
+        username,
+        email,
+        password,
+      });
       const { user, token } = response.data.data;
       setAuthToken(token);
       setCurrentUser(user);
@@ -64,18 +69,20 @@ export function AuthProvider({ children }) {
       if (token) {
         setAuthToken(token);
         try {
-          // ⚠️ backend needs this route
           const response = await axios.get('/auth/me');
           setCurrentUser(response.data.user);
         } catch (error) {
-          console.error("Auth check failed:", error.response?.data || error.message);
+          console.error(
+            'Auth check failed:',
+            error.response?.data || error.message
+          );
           logout();
         }
       }
       setLoading(false);
     };
     checkLoggedIn();
-  });
+  }, []);
 
   const value = {
     currentUser,
